@@ -36,38 +36,61 @@ public:
 	bool carOn = false;
 	bool driving = false;
 	char turn = 's';
-	bool faster = false;
-	bool slower = false;
 
-	void getColor() {
-		cin >> color;
-	}
-	void getMake() {
-		cin >> make;
-	}
-	void getModel() {
-		cin >> model;
-	}
-	void getYear() {
-		cin >> year;
-	}
-	void getSpeed() {
-		cin >> speed;
-	}
-	void GetCarOn() {
-		cin >> carOn;
-	}
-	void getDriving() {
-		cin >> driving;
-	}
-	void getTurn() {
-		cin >> turn;
-	}
-	void getFaster() {
-		cin >> faster;
-	}
-	void getSlower() {
-		cin >> slower;
+	void getInput(char input) {
+		switch (input) {
+		case 'c':
+			cout << "Set the car color: ";
+			cin >> color;
+			cout << "The car is now colored " << color;
+			break;
+		case 'm':
+			cout << "Set the car make: ";
+			cin >> make;
+		case 'o':
+			cout << "Set the car model: ";
+			cin >> model;
+			break;
+		case 'y':
+			cout << "Set the car year: ";
+			cin >> year;
+			break;
+		case 'n':
+			carOn = true;
+			break;
+		case 'f':
+			carOn = false;
+			break;
+		case 'd':
+			driving = true;
+			break;
+		case 'p':
+			driving = false;
+			break;
+		case 'g':
+			speed += 10;
+			break;
+		case 'b':
+			speed -= 10;
+			break;
+		case 'l':
+			turn = 'l';
+			break;
+		case 's':
+			turn = 's';
+			break;
+		case 'r':
+			turn = 'r';
+			break;
+		case 't':
+			printStats();
+			break;
+		case 'a':
+			printActions();
+			break;
+		default:
+			cout << "nope";
+		}
 	}
 
 	void printStats() {
@@ -99,52 +122,29 @@ public:
 		}
 		cout << endl;
 	}
+
 	void printActions() {
-		cout << "Choose an action:" << endl << "Set year (y)" << endl << "Set color (c)" << endl << "Set make (m)" << endl << "Set model (o)" << endl << "Car on (n) or off (f)" << endl << "Drive (d) or park (p)" << endl << "Give it some gas (g) or some brake (b)" << endl << "Turn or go straight (l) (s) (r)" << endl << "You can press (a) to show these actions again or (t) to show the status of the car." << endl;
+		cout << "Choose an action:" << endl << "Set year (y)" << endl << "Set color (c)" << endl << "Set make (m)" << endl << "Set model (o)" << endl << "Car on (n) or off (f)" << endl << "Drive (d) or park (p)" << endl << "Give it some gas (g) or some brake (b)" << endl << "Turn or go straight (l) (s) (r)" << endl << "You can press (a) to show these actions again, (t) to show the status of the car, or (x) to exit." << endl;
 	}
 };
 
 int main() {
 	userCar car;
-	char input;
+	char userInput;
+	bool keepAlive = true;
 
 	car.printStats();
 	car.printActions();
 
-	while (true) {
-		cin >> input;
-		if (input == 'y') {
-			car.getYear;
+	while (keepAlive == true) {
+		cout << "Your action: ";
+		cin >> userInput;
+		if (userInput == 'x') {
+			keepAlive = false;
 		}
-		if (input == 'c') {
-			car.getColor;
+		else {
+			car.getInput(userInput);
 		}
-		if (input == 'o') {
-			car.getModel;
-		}
-		if (input == 'n') {
-			car.GetCarOn;
-		}
-		if (input == 'c') {
-			car.getColor;
-		}
-		if (input == 'c') {
-			car.getColor;
-		}
-		if (input == 'c') {
-			car.getColor;
-		}
-		if (input == 'c') {
-			car.getColor;
-		}
-		if (input == 'c') {
-			car.getColor;
-		}
-
 	}
-
-
-	int keepAlive = 'y';
-	cin >> keepAlive;
 	return 0;
 }
