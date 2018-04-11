@@ -42,45 +42,92 @@ public:
 		case 'c':
 			cout << "Set the car color: ";
 			cin >> color;
-			cout << "The car is now colored " << color;
+			cout << "The car is now colored " << color << endl;
 			break;
 		case 'm':
 			cout << "Set the car make: ";
 			cin >> make;
+			cout << "The car is now the make " << make << endl;
+			break;
 		case 'o':
 			cout << "Set the car model: ";
 			cin >> model;
+			cout << "The car is now the model " << model << endl;
 			break;
 		case 'y':
 			cout << "Set the car year: ";
 			cin >> year;
+			cout << "The car is now the year " << year << endl;
 			break;
 		case 'n':
-			carOn = true;
+			if (carOn == true) {
+				cout << "The car is already on." << endl;
+			}
+			else {
+				carOn = true;
+				cout << "VROOM the car is now on." << endl;
+			}
 			break;
 		case 'f':
-			carOn = false;
+			if (carOn == false) {
+				cout << "The car is already off." << endl;
+			}
+			else if (driving == true) {
+				cout << "You should put the car in park before turning it off." << endl;
+			}
+			else {
+				carOn = false;
+				cout << "The car is now off" << endl;
+			}
 			break;
 		case 'd':
-			driving = true;
+			if (driving == true) {
+				cout << "The car is already in drive." << endl;
+			}
+			else if (carOn == false) {
+				cout << "You can't put the car in drive if the car is off." << endl;
+			}
+			else {
+				driving = true;
+				cout << "The car is now in drive." << endl;
+			}
 			break;
 		case 'p':
-			driving = false;
+			if (driving == false) {
+				cout << "The car is already in park." << endl;
+			}
+			else if (speed > 0) {
+				cout << "You can't put the car in park while you are moving." << endl;
+			}
+			else {
+				driving = false;
+				cout << "The car is now in park." << endl;
+			}
 			break;
 		case 'g':
-			speed += 10;
+			if (driving == true) {
+				speed += 10;
+				cout << "The car is now going " << speed << " MPH." << endl;
+			}
+			else {
+				cout << "You tapped the gas pedal but it does nothing if you aren't in drive." << endl;
+			}
 			break;
 		case 'b':
-			speed -= 10;
+			if (speed < 1) {
+				cout << "You tapped the brakes but you already aren't moving." << endl;
+				speed = 0;
+			}
+			else {
+				speed -= 10;
+				cout << "The car is now going " << speed << " MPH." << endl;
+			}
 			break;
 		case 'l':
-			turn = 'l';
-			break;
 		case 's':
-			turn = 's';
-			break;
 		case 'r':
-			turn = 'r';
+			turn = input;
+			cout << "Turned the steering wheel a bit" << endl;
 			break;
 		case 't':
 			printStats();
@@ -89,12 +136,12 @@ public:
 			printActions();
 			break;
 		default:
-			cout << "nope";
+			cout << "Unknown input.";
 		}
 	}
 
 	void printStats() {
-		cout << "You are in a " << year << " " << color << " " << make << " " << model << "." << endl;
+		cout << endl << "You are in a " << year << " " << color << " " << make << " " << model << "." << endl;
 		if (carOn == false) {
 			cout << "The car is off." << endl;
 		}
@@ -115,7 +162,7 @@ public:
 						cout << " while turning right.";
 					}
 					else {
-						cout << ".";
+						cout << " driving straight ahead.";
 					}
 				}
 			}
@@ -124,7 +171,7 @@ public:
 	}
 
 	void printActions() {
-		cout << "Choose an action:" << endl << "Set year (y)" << endl << "Set color (c)" << endl << "Set make (m)" << endl << "Set model (o)" << endl << "Car on (n) or off (f)" << endl << "Drive (d) or park (p)" << endl << "Give it some gas (g) or some brake (b)" << endl << "Turn or go straight (l) (s) (r)" << endl << "You can press (a) to show these actions again, (t) to show the status of the car, or (x) to exit." << endl;
+		cout << "Choose an action:" << endl << "Set year (y)" << endl << "Set color (c)" << endl << "Set make (m)" << endl << "Set model (o)" << endl << "Car on (n) or off (f)" << endl << "Drive (d) or park (p)" << endl << "Give it some gas (g) or some brake (b)" << endl << "Turn or go straight (l) (s) (r)" << endl << "Press (a) to show these actions again, (t) to show the status of the car, or (x) to exit the program." << endl;
 	}
 };
 
@@ -132,6 +179,7 @@ int main() {
 	userCar car;
 	char userInput;
 	bool keepAlive = true;
+	bool carExploded = false;
 
 	car.printStats();
 	car.printActions();
@@ -142,9 +190,28 @@ int main() {
 		if (userInput == 'x') {
 			keepAlive = false;
 		}
+		else if (userInput == 'e') {
+			keepAlive = false;
+			carExploded = true;
+		}
 		else {
 			car.getInput(userInput);
 		}
 	}
+
+	if (carExploded == true) {
+		cout << "You found the self-destruct button and pushed it. The car counted down from 5 and you narrowly ran away in time. The car exploded." << endl;
+	}
+	while (carExploded == true) {
+		cout << "Your action: ";
+		cin >> userInput;
+		if (userInput == 'x') {
+			carExploded = false;
+		}
+		else {
+			cout << "That's hard to do with a smouldering pile of metal." << endl;
+		}
+	}
+
 	return 0;
 }
